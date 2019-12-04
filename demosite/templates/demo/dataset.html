@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+<div class="text-center vertical-middle-sm">
+    <h1>Dataset</h1>
+</div>
+<div class="row">
+    <div style="width:70%; margin:auto">
+        <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th>Adultid</th>
+                <th>age</th>
+                <th>workclass</th>
+                <th>education</th>
+                <th>marital_status</th>
+                <th>occupation</th>
+                <th>race</th>
+                <th>gender</th>
+                <th>hours_per_week</th>
+                <th>income</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for row in db %}
+            <tr>
+                <th>{{ row.Adultid }}</th>
+                <th>{{ row.age}}</th>
+                <th>{{ row.workclass}}</th>
+                <th>{{ row.education}}</th>
+                <th>{{ row.marital_status}}</th>
+                <th>{{ row.occupation}}</th>
+                <th>{{ row.race}}</th>
+                <th>{{ row.gender}}</th>
+                <th>{{ row.hours_per_week}}</th>
+                <th>{{ row.income}}</th>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

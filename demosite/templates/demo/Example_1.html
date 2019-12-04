@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+<div class="text-center vertical-middle-sm">
+    <h1>Example 1</h1>
+    <h2>K = 3</h2>
+</div>
+<div class="row">
+<div style="width:70%; margin: auto">
+    <table class="table table-bordered text-center">
+        <caption class="text-center" style="color: black; font-size:25px">Original Data</caption>
+        <thead>
+            <tr>
+                <th>Adultid</th>
+                <th>age</th>
+                <th>workclass</th>
+                <th>education</th>
+                <th>marital_status</th>
+                <th>occupation</th>
+                <th>race</th>
+                <th>gender</th>
+                <th>hours_per_week</th>
+                <th>income</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for row in dbo %}
+            <tr>
+                <th>{{ row.Adultid }}</th>
+                <th>{{ row.age}}</th>
+                <th>{{ row.workclass}}</th>
+                <th>{{ row.education}}</th>
+                <th>{{ row.marital_status}}</th>
+                <th>{{ row.occupation}}</th>
+                <th>{{ row.race}}</th>
+                <th>{{ row.gender}}</th>
+                <th>{{ row.hours_per_week}}</th>
+                <th>{{ row.income}}</th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="row">
+<div style="width:70%; margin: auto">
+    <table class="table table-bordered text-center">
+        <caption class="text-center" style="color: black; font-size:25px">DICE Explanations</caption>
+        <thead>
+            <tr>
+                <th>Adultid</th>
+                <th>age</th>
+                <th>workclass</th>
+                <th>education</th>
+                <th>marital_status</th>
+                <th>occupation</th>
+                <th>race</th>
+                <th>gender</th>
+                <th>hours_per_week</th>
+                <th>income</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for row in db %}
+            <tr>
+                <th>{{ row.Adultid }}</th>
+                <th>{{ row.age}}</th>
+                <th>{{ row.workclass}}</th>
+                <th>{{ row.education}}</th>
+                <th>{{ row.marital_status}}</th>
+                <th>{{ row.occupation}}</th>
+                <th>{{ row.race}}</th>
+                <th>{{ row.gender}}</th>
+                <th>{{ row.hours_per_week}}</th>
+                <th>{{ row.income}}</th>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="row">
+<div style="width:70%; margin: auto">
+    <table class="table table-bordered text-center">
+        <caption class="text-center" style="color: black; font-size:25px">LIME Explanations</caption>
+        <thead>
+            <tr>
+                <th>Adultid</th>
+                <th>age</th>
+                <th>workclass</th>
+                <th>education</th>
+                <th>marital_status</th>
+                <th>occupation</th>
+                <th>race</th>
+                <th>gender</th>
+                <th>hours_per_week</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for row in dbl %}
+            <tr>
+                <th>{{ row.Adultid }}</th>
+                <th style="background-color:{{style.0}}">{{ row.age|floatformat:6}}</th>
+                <th style="background-color:{{style.1}}">{{ row.workclass|floatformat:6}}</th>
+                <th style="background-color:{{style.2}}">{{ row.education|floatformat:6}}</th>
+                <th style="background-color:{{style.3}}">{{ row.marital_status|floatformat:6}}</th>
+                <th style="background-color:{{style.4}}">{{ row.occupation|floatformat:6}}</th>
+                <th style="background-color:{{style.5}}">{{ row.race|floatformat:6}}</th>
+                <th style="background-color:{{style.6}}">{{ row.gender|floatformat:6}}</th>
+                <th style="background-color:{{style.7}}">{{ row.hours_per_week|floatformat:6}}</th>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="row">
+<div style="width:70%; margin: auto">
+    <form class="form-horizontal" method=POST action="/Example_1">
+    {% csrf_token %}
+       <div>
+           <table class="table table-hover">
+              <caption class="text-center" style="color: black; font-size:25px">Performance Survey</caption>
+              <thead>
+                <tr>
+                    <th>Questions</th>
+                    <th>Strongly Disagree</th>
+                    <th>Disagree</th>
+                    <th>Neutral</th>
+                    <th>Agree</th>
+                    <th>Strongly Agree</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td>Do you think that the decision is justified given the profile?</td>
+                    <td>{{ rating_form.rate_choice1.0}}</td>
+                    <td>{{ rating_form.rate_choice1.1}}</td>
+                    <td>{{ rating_form.rate_choice1.2}}</td>
+                    <td>{{ rating_form.rate_choice1.3}}</td>
+                    <td>{{ rating_form.rate_choice1.4}}</td>
+                </tr>
+
+                <tr>
+                    <td>Do you understand why you did not get the loan? (elaborate)</td>
+                    <td>{{ rating_form.rate_choice2.0}}</td>
+                    <td>{{ rating_form.rate_choice2.1}}</td>
+                    <td>{{ rating_form.rate_choice2.2}}</td>
+                    <td>{{ rating_form.rate_choice2.3}}</td>
+                    <td>{{ rating_form.rate_choice2.4}}</td>
+                </tr>
+
+                <tr>
+                    <td>What is your level of confidence for getting a different decision next time after changing your profile?</td>
+                    <td>{{ rating_form.rate_choice3.0}}</td>
+                    <td>{{ rating_form.rate_choice3.1}}</td>
+                    <td>{{ rating_form.rate_choice3.2}}</td>
+                    <td>{{ rating_form.rate_choice3.3}}</td>
+                    <td>{{ rating_form.rate_choice3.4}}</td>
+                </tr>
+
+                <tr>
+                    <td>How feasible are the changes that you want to make?</td>
+                    <td>{{ rating_form.rate_choice4.0}}</td>
+                    <td>{{ rating_form.rate_choice4.1}}</td>
+                    <td>{{ rating_form.rate_choice4.2}}</td>
+                    <td>{{ rating_form.rate_choice4.3}}</td>
+                    <td>{{ rating_form.rate_choice4.4}}</td>
+                </tr>
+
+                <tr>
+                    <td>How well do you think that you understand the underlying model?</td>
+                    <td>{{ rating_form.rate_choice5.0}}</td>
+                    <td>{{ rating_form.rate_choice5.1}}</td>
+                    <td>{{ rating_form.rate_choice5.2}}</td>
+                    <td>{{ rating_form.rate_choice5.3}}</td>
+                    <td>{{ rating_form.rate_choice5.4}}</td>
+                </tr>
+              </tbody>
+            </table>
+       </div>
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea class="form-control" rows="5" id="comment" name="content"></textarea>
+        </div>
+    <input type="submit" value="Submit" class="btn btn-info">
+</form>
+</div>
+</div>
+
+{% endblock %}

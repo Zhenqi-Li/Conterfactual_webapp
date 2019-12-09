@@ -84,9 +84,9 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'AdultIncome',
-        'USER': 'root',
-        'PASSWORD': '123456',
+        'NAME': 'adultincome_dev',
+        'USER': 'hcml',
+        'PASSWORD': 'hcml@Colorado9',
         'HOST': '127.0.0.1',
         'POST': 3306,
 

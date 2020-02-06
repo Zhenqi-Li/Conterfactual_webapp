@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Adult, AdultCFk_3, AdultCFk_4, AdultCFk_5, LIMEexp, Comments
 from .forms import RateListForm
 import random
+import pickle
 
 
 # Create your views here.
@@ -26,6 +27,8 @@ def choosecolor(num):
             return "#43C4FF"
         elif -0.5 >= num > -0.7:
             return "#00AFFF"
+        elif -0.7 >= num > -1.0:
+            return "#007bb3"
     return "#00000"
 
 
@@ -126,6 +129,7 @@ def demo_table3(request):
     style[5] = choosecolor(dbl[0].race)
     style[6] = choosecolor(dbl[0].gender)
     style[7] = choosecolor(dbl[0].hours_per_week)
+
     if request.method == "POST":
         rating_form = RateListForm(request.POST)
         if rating_form.is_valid():
@@ -143,3 +147,5 @@ def demo_table3(request):
         rating_form = RateListForm()
         return render(request, "demo/Example_3.html",
                       {'db': db, 'dbo': dbo, 'dbl': dbl, 'rating_form': rating_form, 'style': style})
+def predictmodel(request):
+    dicemodel = pickle.load(open("dice_model.h5"))

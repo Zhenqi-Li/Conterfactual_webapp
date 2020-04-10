@@ -80,7 +80,7 @@ class LIMEexp(models.Model):
     hours_per_week = models.FloatField(blank=True, default=None, null=True)
 
 
-class Rates(models.Model):
+class Survey_rates(models.Model):
     options = (
         (1, ''),
         (2, ''),
@@ -93,7 +93,28 @@ class Rates(models.Model):
     rate_choice3 = models.PositiveSmallIntegerField(choices=options)
     rate_choice4 = models.PositiveSmallIntegerField(choices=options)
     rate_choice5 = models.PositiveSmallIntegerField(choices=options)
+    class Meta:
+        db_table = 'Survey_rates'
 
 
-class Comments(models.Model):
+class Survey_Comments(models.Model):
     comments = models.CharField(max_length=1000, blank=True, null=True)
+    class Meta:
+        db_table = 'survey_comments'
+
+class Survey_result(models.Model):
+    dataid = models.AutoField(auto_created=True, primary_key=True)
+    workid = models.IntegerField(blank=True, default=None, null=True)
+    testcase_1 = models.IntegerField(blank=True, default=None, null=True)
+    testcase_2 = models.IntegerField(blank=True, default=None, null=True)
+    testcase_3 = models.IntegerField(blank=True, default=None, null=True)
+    true_1 = models.IntegerField(blank=True, default=None, null=True)
+    true_2 = models.IntegerField(blank=True, default=None, null=True)
+    true_3 = models.IntegerField(blank=True, default=None, null=True)
+    class Meta:
+        db_table = 'survey_result'
+
+
+
+
+

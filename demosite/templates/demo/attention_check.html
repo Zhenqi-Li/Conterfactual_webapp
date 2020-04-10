@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+<div class="text-center vertical-middle-sm">
+    <h1>Attention Check</h1>
+</div>
+<div class="row">
+<div style="width:70%; margin: auto">
+    <form class="form-horizontal" method=POST action="/attention_check">
+    {% csrf_token %}
+       <div>
+           <table class="table table-hover">
+              <thead>
+                <tr>
+                    <th>Questions</th>
+                    <th>True</th>
+                    <th>False</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td>The project is helping people to have a better understanding of models.</td>
+                    <td>{{ att.choice1.0}}</td>
+                    <td>{{ att.choice1.1}}</td>
+                </tr>
+
+                <tr>
+                    <td>I am not paying attention to the project.</td>
+                    <td>{{ att.choice2.0}}</td>
+                    <td>{{ att.choice2.1}}</td>
+                </tr>
+              </tbody>
+            </table>
+       </div>
+    <input type="submit" value="Submit" class="btn btn-info">
+</form>
+</div>
+</div>
+
+{% endblock %}

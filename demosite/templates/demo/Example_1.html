@@ -1,17 +1,189 @@
 {% extends "base.html" %}
 {% block content %}
 {% load staticfiles %}
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {opacity: 1}
+.slidecontainer {
+  width: 100%;
+}
+</style>
+<style>
+.radar-chart .axis .legend {
+  font-size: 12px;
+}
+.radar-chart .area {
+  fill-opacity: 0.7;
+}
+.radar-chart.focus .area {
+  fill-opacity: 0.3;
+}
+.radar-chart.focus .area.focused {
+  fill-opacity: 0.9;
+}
+.area.original, .original .circle {
+  fill: #C2F9F5;
+  stroke: none;
+}
+.area.cf_example, .cf_example .circle {
+  fill: #FAD8D8;
+  stroke: none;
+}
+.area.test, .test .circle {
+  fill: #CDFE9F;
+  stroke: none;
+}
+</style>
+<script>
+RadarChart.defaultConfig.color = function() {};
+RadarChart.defaultConfig.radius = 4;
+RadarChart.defaultConfig.w = 300;
+RadarChart.defaultConfig.h = 300;
+RadarChart.defaultConfig.factor = 0.8;
+</script>
+<script>
+var data1 = [
+  {
+    className: 'original', // optional can be used for styling
+    axes: [
+      {axis: "Age", value: {{dbo.0.age}}},
+      {axis: "Workclass", value: {{ori.0}}},
+      {axis: "Education", value: {{ori.1}}},
+      {axis: "Marital_status", value: {{ori.2}}},
+      {axis: "OccuPation", value: {{ori.3}}},
+      {axis: "race", value: {{ori.4}}},
+      {axis: "gender", value: {{ori.5}}},
+      {axis: "hours_per_week", value: {{dbo.0.hours_per_week}}},
+    ]
+  },
+  {
+    className: 'cf_example',
+    axes: [
+      {axis: "Age", value: {{db.0.age}}},
+      {axis: "Workclass", value: {{dice1.0}}},
+      {axis: "Education", value: {{dice1.1}}},
+      {axis: "Marital_status", value: {{dice1.2}}},
+      {axis: "OccuPation", value: {{dice1.3}}},
+      {axis: "race", value: {{dice1.4}}},
+      {axis: "gender", value: {{dice1.5}}},
+      {axis: "hours_per_week", value: {{db.0.hours_per_week}}},
+    ]
+  }
+];
+
+var data2 = [
+  {
+    className: 'original', // optional can be used for styling
+    axes: [
+      {axis: "Age", value: {{dbo.0.age}}},
+      {axis: "Workclass", value: {{ori.0}}},
+      {axis: "Education", value: {{ori.1}}},
+      {axis: "Marital_status", value: {{ori.2}}},
+      {axis: "OccuPation", value: {{ori.3}}},
+      {axis: "race", value: {{ori.4}}},
+      {axis: "gender", value: {{ori.5}}},
+      {axis: "hours_per_week", value: {{dbo.0.hours_per_week}}},
+    ]
+  },
+  {
+    className: 'cf_example',
+    axes: [
+      {axis: "Age", value: {{db.1.age}}},
+      {axis: "Workclass", value: {{dice2.0}}},
+      {axis: "Education", value: {{dice2.1}}},
+      {axis: "Marital_status", value: {{dice2.2}}},
+      {axis: "OccuPation", value: {{dice2.3}}},
+      {axis: "race", value: {{dice2.4}}},
+      {axis: "gender", value: {{dice2.5}}},
+      {axis: "hours_per_week", value: {{db.1.hours_per_week}}},
+    ]
+  }
+];
+
+var data3 = [
+  {
+    className: 'original', // optional can be used for styling
+    axes: [
+      {axis: "Age", value: {{dbo.0.age}}},
+      {axis: "Workclass", value: {{ori.0}}},
+      {axis: "Education", value: {{ori.1}}},
+      {axis: "Marital_status", value: {{ori.2}}},
+      {axis: "OccuPation", value: {{ori.3}}},
+      {axis: "race", value: {{ori.4}}},
+      {axis: "gender", value: {{ori.5}}},
+      {axis: "hours_per_week", value: {{dbo.0.hours_per_week}}},
+    ]
+  },
+  {
+    className: 'cf_example',
+    axes: [
+      {axis: "Age", value: {{db.2.age}}},
+      {axis: "Workclass", value: {{dice3.0}}},
+      {axis: "Education", value: {{dice3.1}}},
+      {axis: "Marital_status", value: {{dice3.2}}},
+      {axis: "OccuPation", value: {{dice3.3}}},
+      {axis: "race", value: {{dice3.4}}},
+      {axis: "gender", value: {{dice3.5}}},
+      {axis: "hours_per_week", value: {{db.2.hours_per_week}}},
+    ]
+  }
+];
+var data4 = [
+  {
+    className: 'original', // optional can be used for styling
+    axes: [
+      {axis: "Age", value: {{dbo.0.age}}},
+      {axis: "Workclass", value: {{ori.0}}},
+      {axis: "Education", value: {{ori.1}}},
+      {axis: "Marital_status", value: {{ori.2}}},
+      {axis: "OccuPation", value: {{ori.3}}},
+      {axis: "race", value: {{ori.4}}},
+      {axis: "gender", value: {{ori.5}}},
+      {axis: "hours_per_week", value: {{dbo.0.hours_per_week}}},
+    ]
+  },
+  {
+    className: 'test',
+    axes: [
+      {axis: "Age", value: {{testadults.0.1.age}}},
+      {axis: "Workclass", value: {{test1.0}}},
+      {axis: "Education", value: {{test1.1}}},
+      {axis: "Marital_status", value: {{test1.2}}},
+      {axis: "OccuPation", value: {{test1.3}}},
+      {axis: "race", value: {{test1.4}}},
+      {axis: "gender", value: {{test1.5}}},
+      {axis: "hours_per_week", value: {{testadults.0.1.hours_per_week}}},
+    ]
+  }
+];
+</script>
 <div class="text-center vertical-middle-sm">
-    <h1>Example 1</h1>
-    <h2>K = 3</h2>
+    <h3>
+        Predict what a machine learning model would decide for a person's profile.
+        {{workid}}
+        <br>
+
+    </h3>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
+<div style="width:80%; margin: auto">
     <table class="table table-bordered text-center">
         <caption class="text-center" style="color: black; font-size:25px">Original Data</caption>
         <thead>
             <tr>
-                <th>Adultid</th>
                 <th>age</th>
                 <th>workclass</th>
                 <th>education</th>
@@ -20,36 +192,32 @@
                 <th>race</th>
                 <th>gender</th>
                 <th>hours_per_week</th>
-                <th>income</th>
+                <th style="color: red">Prediction</th>
             </tr>
         </thead>
 
         <tbody>
-        {% for row in dbo %}
-            <tr>
-                <th>{{ row.Adultid }}</th>
-                <th>{{ row.age}}</th>
-                <th>{{ row.workclass}}</th>
-                <th>{{ row.education}}</th>
-                <th>{{ row.marital_status}}</th>
-                <th>{{ row.occupation}}</th>
-                <th>{{ row.race}}</th>
-                <th>{{ row.gender}}</th>
-                <th>{{ row.hours_per_week}}</th>
-                <th>{{ row.income}}</th>
+        <tr>
+                <th>{{ dbo.0.age}}</th>
+                <th>{{ dbo.0.workclass}}</th>
+                <th>{{ dbo.0.education}}</th>
+                <th>{{ dbo.0.marital_status}}</th>
+                <th>{{ dbo.0.occupation}}</th>
+                <th>{{ dbo.0.race}}</th>
+                <th>{{ dbo.0.gender}}</th>
+                <th>{{ dbo.0.hours_per_week}}</th>
+                <th style="color: red">{{ dbo.0.income}}</th>
             </tr>
-        {% endfor %}
         </tbody>
     </table>
 </div>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
+<div style="width:80%; margin: auto">
     <table class="table table-bordered text-center">
         <caption class="text-center" style="color: black; font-size:25px">DICE Explanations</caption>
         <thead>
             <tr>
-                <th>Adultid</th>
                 <th>age</th>
                 <th>workclass</th>
                 <th>education</th>
@@ -58,23 +226,54 @@
                 <th>race</th>
                 <th>gender</th>
                 <th>hours_per_week</th>
-                <th>income</th>
+                <th style="color: red">Prediction</th>
             </tr>
         </thead>
 
         <tbody>
         {% for row in db %}
             <tr>
-                <th>{{ row.Adultid }}</th>
-                <th>{{ row.age}}</th>
+                {% if row.age != dbo.0.age %}
+                <th>{{ row.age }}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.workclass != dbo.0.workclass %}
                 <th>{{ row.workclass}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.education != dbo.0.education %}
                 <th>{{ row.education}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.marital_status != dbo.0.marital_status %}
                 <th>{{ row.marital_status}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.occupation != dbo.0.occupation %}
                 <th>{{ row.occupation}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.race != dbo.0.race %}
                 <th>{{ row.race}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.gender != dbo.0.gender %}
                 <th>{{ row.gender}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.hours_per_week != dbo.0.hours_per_week %}
                 <th>{{ row.hours_per_week}}</th>
-                <th>{{ row.income}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                <th style="color: red">{{ row.income}}</th>
             </tr>
         {% endfor %}
 
@@ -83,12 +282,30 @@
 </div>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
-    <table class="table table-bordered text-center">
-        <caption class="text-center" style="color: black; font-size:25px">LIME Explanations</caption>
+<div style="width:40%; margin: auto">
+    <table class="lime table table-bordered text-center" >
+            <tr>
+                <th width="60%">Original Example</th>
+                <th width="40%" style="background-color:#C2F9F5"></th>
+            </tr>
+            <tr>
+                <th width="60%">Counterfactual Example</th>
+                <th width="40%" style="background-color:#FAD8D8"></th>
+            </tr>
+    </table>
+</div>
+<div style="width:80%; margin: auto">
+    <div class="chart-container col-sm-4"><h3>Original vs CF1</h3></div>
+    <div class="chart-container2 col-sm-4"><h3>Original vs CF2</h3></div>
+    <div class="chart-container3 col-sm-4"><h3>Original vs CF3</h3></div>
+</div>
+</div>
+<div>
+    <div style="width:80%; margin:auto">
+       <table class="table table-bordered text-center">
+           <caption class="text-center" style="color: black; font-size:25px">Based on the above explanations, here is the 1st test case <text style="color:red"> 1/3</text></caption>
         <thead>
             <tr>
-                <th>Adultid</th>
                 <th>age</th>
                 <th>workclass</th>
                 <th>education</th>
@@ -101,96 +318,85 @@
         </thead>
 
         <tbody>
-        {% for row in dbl %}
             <tr>
-                <th>{{ row.Adultid }}</th>
-                <th style="background-color:{{style.0}}">{{ row.age|floatformat:6}}</th>
-                <th style="background-color:{{style.1}}">{{ row.workclass|floatformat:6}}</th>
-                <th style="background-color:{{style.2}}">{{ row.education|floatformat:6}}</th>
-                <th style="background-color:{{style.3}}">{{ row.marital_status|floatformat:6}}</th>
-                <th style="background-color:{{style.4}}">{{ row.occupation|floatformat:6}}</th>
-                <th style="background-color:{{style.5}}">{{ row.race|floatformat:6}}</th>
-                <th style="background-color:{{style.6}}">{{ row.gender|floatformat:6}}</th>
-                <th style="background-color:{{style.7}}">{{ row.hours_per_week|floatformat:6}}</th>
+                {% if testadults.0.1.age != dbo.0.age %}
+                <th>{{ testadults.0.1.age}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.0.1.workclass != dbo.0.workclass %}
+                <th>{{ testadults.0.1.workclass}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.0.1.education != dbo.0.education %}
+                <th>{{ testadults.0.1.education}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.0.1.marital_status != dbo.0.marital_status %}
+                <th>{{ testadults.0.1.marital_status}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.0.1.occupation != dbo.0.occupation %}
+                <th>{{ testadults.0.1.occupation}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.0.1.race != dbo.0.race %}
+                <th>{{ testadults.0.1.race}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.0.1.gender != dbo.0.gender %}
+                <th>{{ testadults.0.1.gender}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.0.1.hours_per_week != dbo.0.hours_per_week %}
+                <th>{{ testadults.0.1.hours_per_week}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
             </tr>
-        {% endfor %}
-
         </tbody>
     </table>
+    </div>
+</div>
+<div class="row">
+<div style="width:80%; margin: auto">
+    <div class="col-sm-4"><h3>Test Case vs Original Example</h3></div>
+    <div class="chart-container4 col-sm-4"></div>
+    <div class="col-sm-4">
+        <table class="lime table table-bordered text-center" >
+            <tr>
+                <th width="60%">Original Example</th>
+                <th width="40%" style="background-color:#C2F9F5"></th>
+            </tr>
+            <tr>
+                <th width="60%">Test CF Example</th>
+                <th width="40%" style="background-color:#CDFE9F"></th>
+            </tr>
+        </table>
+    </div>
 </div>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
-    <form class="form-horizontal" method=POST action="/Example_1">
-    {% csrf_token %}
-       <div>
-           <table class="table table-hover">
-              <caption class="text-center" style="color: black; font-size:25px">Performance Survey</caption>
-              <thead>
-                <tr>
-                    <th>Questions</th>
-                    <th>Strongly Disagree</th>
-                    <th>Disagree</th>
-                    <th>Neutral</th>
-                    <th>Agree</th>
-                    <th>Strongly Agree</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                    <td>Do you think that the decision is justified given the profile?</td>
-                    <td>{{ rating_form.rate_choice1.0}}</td>
-                    <td>{{ rating_form.rate_choice1.1}}</td>
-                    <td>{{ rating_form.rate_choice1.2}}</td>
-                    <td>{{ rating_form.rate_choice1.3}}</td>
-                    <td>{{ rating_form.rate_choice1.4}}</td>
-                </tr>
-
-                <tr>
-                    <td>Do you understand why you did not get the loan? (elaborate)</td>
-                    <td>{{ rating_form.rate_choice2.0}}</td>
-                    <td>{{ rating_form.rate_choice2.1}}</td>
-                    <td>{{ rating_form.rate_choice2.2}}</td>
-                    <td>{{ rating_form.rate_choice2.3}}</td>
-                    <td>{{ rating_form.rate_choice2.4}}</td>
-                </tr>
-
-                <tr>
-                    <td>What is your level of confidence for getting a different decision next time after changing your profile?</td>
-                    <td>{{ rating_form.rate_choice3.0}}</td>
-                    <td>{{ rating_form.rate_choice3.1}}</td>
-                    <td>{{ rating_form.rate_choice3.2}}</td>
-                    <td>{{ rating_form.rate_choice3.3}}</td>
-                    <td>{{ rating_form.rate_choice3.4}}</td>
-                </tr>
-
-                <tr>
-                    <td>How feasible are the changes that you want to make?</td>
-                    <td>{{ rating_form.rate_choice4.0}}</td>
-                    <td>{{ rating_form.rate_choice4.1}}</td>
-                    <td>{{ rating_form.rate_choice4.2}}</td>
-                    <td>{{ rating_form.rate_choice4.3}}</td>
-                    <td>{{ rating_form.rate_choice4.4}}</td>
-                </tr>
-
-                <tr>
-                    <td>How well do you think that you understand the underlying model?</td>
-                    <td>{{ rating_form.rate_choice5.0}}</td>
-                    <td>{{ rating_form.rate_choice5.1}}</td>
-                    <td>{{ rating_form.rate_choice5.2}}</td>
-                    <td>{{ rating_form.rate_choice5.3}}</td>
-                    <td>{{ rating_form.rate_choice5.4}}</td>
-                </tr>
-              </tbody>
-            </table>
-       </div>
-        <div class="form-group">
-            <label for="comment">Comment:</label>
-            <textarea class="form-control" rows="5" id="comment" name="content"></textarea>
-        </div>
-    <input type="submit" value="Submit" class="btn btn-info">
-</form>
+<div style="width:80%; margin: auto">
+    <h3 style="text-align: center;">What is your prediction for the income?</h3>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #f4511e" type="button" onclick="location.href='/Example_1_1'" value="<=50k"></div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #82D8FF" type="button" onclick="location.href='/Example_1_1'" value=">=50k"></div>
+    <div class="col-sm-2"></div>
 </div>
 </div>
-
+<script>
+RadarChart.draw(".chart-container", data1);
+RadarChart.draw(".chart-container2", data2);
+RadarChart.draw(".chart-container3", data3);
+RadarChart.draw(".chart-container4", data4);
+</script>
 {% endblock %}

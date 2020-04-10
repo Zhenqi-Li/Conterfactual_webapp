@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<style>
+.radar-chart .axis .legend {
+  font-size: 15px;
+}
+.radar-chart .area {
+  fill-opacity: 0.7;
+}
+.radar-chart.focus .area {
+  fill-opacity: 0.3;
+}
+.radar-chart.focus .area.focused {
+  fill-opacity: 0.9;
+}
+.area.original, .original .circle {
+  fill: #FAD8D8;
+  stroke: none;
+}
+.area.cf_example, .cf_example .circle {
+  fill: #C2F9F5;
+  stroke: none;
+}
+</style>
+<script>
+RadarChart.defaultConfig.color = function() {};
+RadarChart.defaultConfig.radius = 3;
+RadarChart.defaultConfig.w = 350;
+RadarChart.defaultConfig.h = 350;
+RadarChart.defaultConfig.factor = 0.9;
+</script>
+<script>
+var data1 = [
+  {
+    className: 'original', // optional can be used for styling
+    axes: [
+      {axis: "Age", value: 35},
+      {axis: "Workclass", value: 75},
+      {axis: "Education", value: 50},
+      {axis: "Marital_status", value: 60},
+      {axis: "occupation", value: 35},
+      {axis: "race", value: 50},
+      {axis: "gender", value: 50},
+      {axis: "hours_per_week", value: 40},
+    ]
+  },
+  {
+    className: 'cf_example',
+    axes: [
+      {axis: "Age", value: 22},
+      {axis: "Workclass", value: 75},
+      {axis: "Education", value: 50},
+      {axis: "Marital_status", value: 30},
+      {axis: "occupation", value: 35},
+      {axis: "race", value: 50},
+      {axis: "gender", value: 50},
+      {axis: "hours_per_week", value: 22},
+    ]
+  }
+];
+
+var data2 = [
+  {
+    className: 'original', // optional can be used for styling
+    axes: [
+      {axis: "Age", value: 35},
+      {axis: "Workclass", value: 75},
+      {axis: "Education", value: 50},
+      {axis: "Marital_status", value: 60},
+      {axis: "occupation", value: 35},
+      {axis: "race", value: 50},
+      {axis: "gender", value: 50},
+      {axis: "hours_per_week", value: 40},
+    ]
+  },
+  {
+    className: 'cf_example',
+    axes: [
+      {axis: "Age", value: 17},
+      {axis: "Workclass", value: 75},
+      {axis: "Education", value: 50},
+      {axis: "Marital_status", value: 60},
+      {axis: "occupation", value: 15},
+      {axis: "race", value: 50},
+      {axis: "gender", value: 50},
+      {axis: "hours_per_week", value: 40},
+    ]
+  }
+];
+
+var data3 = [
+  {
+    className: 'original', // optional can be used for styling
+    axes: [
+      {axis: "Age", value: 35},
+      {axis: "Workclass", value: 75},
+      {axis: "Education", value: 50},
+      {axis: "Marital_status", value: 60},
+      {axis: "occupation", value: 35},
+      {axis: "race", value: 50},
+      {axis: "gender", value: 50},
+      {axis: "hours_per_week", value: 40},
+    ]
+  },
+  {
+    className: 'cf_example',
+    axes: [
+      {axis: "Age", value: 38},
+      {axis: "Workclass", value: 75},
+      {axis: "Education", value: 70},
+      {axis: "Marital_status", value: 30},
+      {axis: "occupation", value: 35},
+      {axis: "race", value: 50},
+      {axis: "gender", value: 50},
+      {axis: "hours_per_week", value: 41},
+    ]
+  }
+];
+
+</script>
+<div class="row">
+<div class="chart-container col-sm-4"><h2>Original vs CF1</h2></div>
+<div class="chart-container2 col-sm-4"><h2>Original vs CF2</h2></div>
+<div class="chart-container3 col-sm-4"><h2>Original vs CF3</h2></div>
+</div>
+<script>
+RadarChart.draw(".chart-container", data1);
+RadarChart.draw(".chart-container2", data2);
+RadarChart.draw(".chart-container3", data3);
+</script>
+{% endblock %}

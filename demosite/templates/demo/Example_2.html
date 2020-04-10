@@ -25,20 +25,18 @@
         </thead>
 
         <tbody>
-        {% for row in dbo %}
             <tr>
-                <th>{{ row.Adultid }}</th>
-                <th>{{ row.age}}</th>
-                <th>{{ row.workclass}}</th>
-                <th>{{ row.education}}</th>
-                <th>{{ row.marital_status}}</th>
-                <th>{{ row.occupation}}</th>
-                <th>{{ row.race}}</th>
-                <th>{{ row.gender}}</th>
-                <th>{{ row.hours_per_week}}</th>
-                <th>{{ row.income}}</th>
+                <th>{{ dbo.0.Adultid }}</th>
+                <th>{{ dbo.0.age}}</th>
+                <th>{{ dbo.0.workclass}}</th>
+                <th>{{ dbo.0.education}}</th>
+                <th>{{ dbo.0.marital_status}}</th>
+                <th>{{ dbo.0.occupation}}</th>
+                <th>{{ dbo.0.race}}</th>
+                <th>{{ dbo.0.gender}}</th>
+                <th>{{ dbo.0.hours_per_week}}</th>
+                <th>{{ dbo.0.income}}</th>
             </tr>
-        {% endfor %}
         </tbody>
     </table>
 </div>
@@ -121,7 +119,7 @@
 </div>
 <div class="row">
 <div style="width:70%; margin: auto">
-    <form class="form-horizontal" method=POST action="/Example_1">
+    <form class="form-horizontal" method=POST action="/Example_2">
     {% csrf_token %}
        <div>
            <table class="table table-hover">

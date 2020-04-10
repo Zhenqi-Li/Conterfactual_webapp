@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+{% load staticfiles %}
+<style>
+.button {
+  width: 100%
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 10px 5px;
+  opacity: 0.6;
+  transition: 0.3s;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {opacity: 1}
+</style>
+<div class="row">
+<div class="text-center vertical-middle-sm">
+    <h1>Welcome to the test!</h1>
+    <h2>Worker No. {{workid}}</h2>
+</div>
+</div>
+<div class="row">
+<div style="width:80%; margin: auto">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"><input class="button" style="width: 100%; background-color: #f4511e" type="button" onclick="location.href='/attention_check'" value="Get Start!"></div>
+    <div class="col-sm-4"></div>
+</div>
+</div>
+{% endblock %}

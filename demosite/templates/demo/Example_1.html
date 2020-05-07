@@ -158,14 +158,14 @@ var data4 = [
   {
     className: 'test',
     axes: [
-      {axis: "Age", value: {{testadults.0.1.age}}},
+      {axis: "Age", value: {{testadults.age}}},
       {axis: "Workclass", value: {{test1.0}}},
       {axis: "Education", value: {{test1.1}}},
       {axis: "Marital_status", value: {{test1.2}}},
       {axis: "OccuPation", value: {{test1.3}}},
       {axis: "race", value: {{test1.4}}},
       {axis: "gender", value: {{test1.5}}},
-      {axis: "hours_per_week", value: {{testadults.0.1.hours_per_week}}},
+      {axis: "hours_per_week", value: {{testadults.hours_per_week}}},
     ]
   }
 ];
@@ -303,7 +303,7 @@ var data4 = [
 <div>
     <div style="width:80%; margin:auto">
        <table class="table table-bordered text-center">
-           <caption class="text-center" style="color: black; font-size:25px">Based on the above explanations, here is the 1st test case <text style="color:red"> 1/3</text></caption>
+           <caption class="text-center" style="color: black; font-size:25px">Based on the above explanations, here is the {{testcase}}st test case <text style="color:red"> {{testcase}}/3</text></caption>
         <thead>
             <tr>
                 <th>age</th>
@@ -319,43 +319,43 @@ var data4 = [
 
         <tbody>
             <tr>
-                {% if testadults.0.1.age != dbo.0.age %}
-                <th>{{ testadults.0.1.age}}</th>
+                {% if testadults.age != dbo.0.age %}
+                <th>{{ testadults.age}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
-                {% if testadults.0.1.workclass != dbo.0.workclass %}
-                <th>{{ testadults.0.1.workclass}}</th>
+                {% if testadults.workclass != dbo.0.workclass %}
+                <th>{{ testadults.workclass}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
-                {% if testadults.0.1.education != dbo.0.education %}
-                <th>{{ testadults.0.1.education}}</th>
+                {% if testadults.education != dbo.0.education %}
+                <th>{{ testadults.education}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
-                {% if testadults.0.1.marital_status != dbo.0.marital_status %}
-                <th>{{ testadults.0.1.marital_status}}</th>
+                {% if testadults.marital_status != dbo.0.marital_status %}
+                <th>{{ testadults.marital_status}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
-                {% if testadults.0.1.occupation != dbo.0.occupation %}
-                <th>{{ testadults.0.1.occupation}}</th>
+                {% if testadults.occupation != dbo.0.occupation %}
+                <th>{{ testadults.occupation}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
-                {% if testadults.0.1.race != dbo.0.race %}
-                <th>{{ testadults.0.1.race}}</th>
+                {% if testadults.race != dbo.0.race %}
+                <th>{{ testadults.race}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
-                {% if testadults.0.1.gender != dbo.0.gender %}
-                <th>{{ testadults.0.1.gender}}</th>
+                {% if testadults.gender != dbo.0.gender %}
+                <th>{{ testadults.gender}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
-                {% if testadults.0.1.hours_per_week != dbo.0.hours_per_week %}
-                <th>{{ testadults.0.1.hours_per_week}}</th>
+                {% if testadults.hours_per_week != dbo.0.hours_per_week %}
+                <th>{{ testadults.hours_per_week}}</th>
                 {% else %}
                 <th>\</th>
                 {% endif%}
@@ -386,10 +386,10 @@ var data4 = [
 <div style="width:80%; margin: auto">
     <h3 style="text-align: center;">What is your prediction for the income?</h3>
     <div class="col-sm-2"></div>
-    <div class="col-sm-2"><input class="button" style="background-color: #f4511e" type="button" onclick="location.href='/Example_1_1'" value="<=50k"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #f4511e" type="button" onclick="location.href='/{{nextpage}}'" value="<=50k"></div>
     <div class="col-sm-2"></div>
     <div class="col-sm-2"></div>
-    <div class="col-sm-2"><input class="button" style="background-color: #82D8FF" type="button" onclick="location.href='/Example_1_1'" value=">=50k"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #82D8FF" type="button" onclick="location.href='/{{nextpage}}'" value=">=50k"></div>
     <div class="col-sm-2"></div>
 </div>
 </div>

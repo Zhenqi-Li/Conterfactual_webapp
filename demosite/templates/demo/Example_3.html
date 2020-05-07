@@ -20,122 +20,17 @@
 .slidecontainer {
   width: 100%;
 }
-.lime th {
-  height: 50px;
-}
-h4{
-font-size:15px
-}
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 12px;
-  border-radius: 3px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider:hover {
-  opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #222;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #4CAF50;
-  cursor: pointer;
-}
-.select-css {
-	display: block;
-	font-size: 12px;
-	font-family: sans-serif;
-	font-weight: 600;
-	color: #444;
-	line-height: 0.8;
-	padding: .6em 1.4em .5em .8em;
-	width: 30%;
-	max-width: 100%; /* useful when width is set to anything other than 100% */
-	box-sizing: border-box;
-	margin: 0;
-	border: 1px solid #aaa;
-	box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-	border-radius: .5em;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-	background-color: #d3d3d3;
-
-	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-	  linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
-	background-repeat: no-repeat, repeat;
-	/* arrow icon position (1em from the right, 50% vertical) , then gradient position*/
-	background-position: right .7em top 50%, 0 0;
-	/* icon size, then gradient */
-	background-size: .65em auto, 100%;
-}
-/* Hide arrow icon in IE browsers */
-.select-css::-ms-expand {
-	display: none;
-}
-/* Hover style */
-.select-css:hover {
-	border-color: #888;
-}
-/* Focus style */
-.select-css:focus {
-	border-color: #aaa;
-	/* It'd be nice to use -webkit-focus-ring-color here but it doesn't work on box-shadow */
-	box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-	box-shadow: 0 0 0 3px -moz-mac-focusring;
-	color: #222;
-	outline: none;
-}
-
-/* Set options to normal weight */
-.select-css option {
-	font-weight:normal;
-}
-
-/* Support for rtl text, explicit support for Arabic and Hebrew */
-*[dir="rtl"] .select-css, :root:lang(ar) .select-css, :root:lang(iw) .select-css {
-	background-position: left .7em top 50%, 0 0;
-	padding: .6em .8em .5em 1.4em;
-}
-
-/* Disabled styles */
-.select-css:disabled, .select-css[aria-disabled=true] {
-	color: graytext;
-	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22graytext%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
-	  linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
-}
-
-.select-css:disabled:hover, .select-css[aria-disabled=true] {
-	border-color: #aaa;
-}
 </style>
 <div class="text-center vertical-middle-sm">
-    <h1>Interacitve Interface</h1>
+    <h1>Only Counterfactual Examples</h1>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
+<div style="width:80%; margin: auto">
     <table class="table table-bordered text-center">
         <caption class="text-center" style="color: black; font-size:25px">Original Data</caption>
         <thead>
             <tr>
+                <th>Adultid</th>
                 <th>age</th>
                 <th>workclass</th>
                 <th>education</th>
@@ -149,23 +44,96 @@ font-size:15px
         </thead>
 
         <tbody>
-        {% for row in dbo %}
             <tr>
-                <th>{{ row.age}}</th>
-                <th>{{ row.workclass}}</th>
-                <th>{{ row.education}}</th>
-                <th>{{ row.marital_status}}</th>
-                <th>{{ row.occupation}}</th>
-                <th>{{ row.race}}</th>
-                <th>{{ row.gender}}</th>
-                <th>{{ row.hours_per_week}}</th>
-                <th>{{ row.income}}</th>
+                <th>{{ dbo.0.Adultid }}</th>
+                <th>{{ dbo.0.age}}</th>
+                <th>{{ dbo.0.workclass}}</th>
+                <th>{{ dbo.0.education}}</th>
+                <th>{{ dbo.0.marital_status}}</th>
+                <th>{{ dbo.0.occupation}}</th>
+                <th>{{ dbo.0.race}}</th>
+                <th>{{ dbo.0.gender}}</th>
+                <th>{{ dbo.0.hours_per_week}}</th>
+                <th>{{ dbo.0.income}}</th>
             </tr>
-        {% endfor %}
         </tbody>
     </table>
+</div>
+</div>
+<div class="row">
+<div style="width:80%; margin: auto">
     <table class="table table-bordered text-center">
-        <caption class="text-center" style="color: black; font-size:25px">User input Data</caption>
+        <caption class="text-center" style="color: black; font-size:25px">DICE Explanations</caption>
+        <thead>
+            <tr>
+                <th>age</th>
+                <th>workclass</th>
+                <th>education</th>
+                <th>marital_status</th>
+                <th>occupation</th>
+                <th>race</th>
+                <th>gender</th>
+                <th>hours_per_week</th>
+                <th style="color: red">Prediction</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for row in db %}
+            <tr>
+                {% if row.age != dbo.0.age %}
+                <th>{{ row.age }}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.workclass != dbo.0.workclass %}
+                <th>{{ row.workclass}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.education != dbo.0.education %}
+                <th>{{ row.education}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.marital_status != dbo.0.marital_status %}
+                <th>{{ row.marital_status}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.occupation != dbo.0.occupation %}
+                <th>{{ row.occupation}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.race != dbo.0.race %}
+                <th>{{ row.race}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.gender != dbo.0.gender %}
+                <th>{{ row.gender}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.hours_per_week != dbo.0.hours_per_week %}
+                <th>{{ row.hours_per_week}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                <th style="color: red">{{ row.income}}</th>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div class="row">
+    <div style="width:80%; margin:auto">
+       <table class="table table-bordered text-center">
+           <caption class="text-center" style="color: black; font-size:25px">Based on the above explanations, here is the {{testcase}}st test case <text style="color:red"> {{testcase}}/3</text></caption>
         <thead>
             <tr>
                 <th>age</th>
@@ -181,215 +149,61 @@ font-size:15px
 
         <tbody>
             <tr>
-                <th id="age"></th>
-                <th id="workclass"></th>
-                <th id="education"></th>
-                <th id="marital_status"></th>
-                <th id="occupation"></th>
-                <th id="race"></th>
-                <th id="gender"></th>
-                <th id="hours"></th>
+                {% if testadults.age != dbo.0.age %}
+                <th>{{ testadults.age}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.workclass != dbo.0.workclass %}
+                <th>{{ testadults.workclass}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.education != dbo.0.education %}
+                <th>{{ testadults.education}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.marital_status != dbo.0.marital_status %}
+                <th>{{ testadults.marital_status}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.occupation != dbo.0.occupation %}
+                <th>{{ testadults.occupation}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.race != dbo.0.race %}
+                <th>{{ testadults.race}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.gender != dbo.0.gender %}
+                <th>{{ testadults.gender}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.hours_per_week != dbo.0.hours_per_week %}
+                <th>{{ testadults.hours_per_week}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
             </tr>
-        <tr>
-            <th style="border-style:hidden"></th><th style="border-style:hidden"></th><th style="border-right-style:solid; border-bottom-style:hidden"></th>
-            <th style="border:3px solid">income</th><th id="income" style="border:3px solid"></th>
-        </tr>
         </tbody>
     </table>
-    <div class="col-sm-6">
-    <div>
-        <h4>Choose your age</h4>
-        <input class="slider" type="range" min="17" max="90" value="53" id="myAgeRange">
     </div>
-    <div>
-        <h4>Choose your working hours per week</h4>
-    <input class="slider" type="range" min="1" max="99" value="50" id="myHoursRange">
-    </div>
-    <div>
-        <h4>Choose your workclass</h4>
-    <select id="myWorkclass" class="select-css">
-      <option value="Private">Private</option>
-      <option value="Self-Employed">Self-Employed</option>
-      <option value="Government">Government</option>
-      <option value="Other/Unknown">Other/Unknown</option>
-    </select>
-    </div>
-    <div>
-        <h4>Choose your education level</h4>
-    <select id="myEduction"class="select-css" size="8" >
-      <option value="Assoc">Assoc</option>
-      <option value="Bachelors">Bachelors</option>
-      <option value="Doctorate">Doctorate</option>
-      <option value="Prof-school">Prof-school</option>
-      <option value="Masters">Masters</option>
-      <option value="School">School</option>
-      <option value="Some-college">Some-college</option>
-      <option value="HS-grad">HS-grad</option>
-    </select>
-    </div>
-    <div>
-        <h4>Choose your marital status</h4>
-    <select id="myMarital" class="select-css">
-      <option value="Divorced">Divorced</option>
-      <option value="Married">Married</option>
-      <option value="Separated">Separated</option>
-      <option value="Single">Single</option>
-      <option value="Widowed">Widowed</option>
-    </select>
-    </div>
-    <div>
-        <h4>Choose your occupation</h4>
-    <select id="myOccupation" class="select-css">
-      <option value="Blue-Collar">Blue-Collar</option>
-      <option value="Other/Unknown">Other/Unknown</option>
-      <option value="Professional">Professional</option>
-      <option value="Sales">Sales</option>
-      <option value="White-Collar">White-Collar</option>
-      <option value="Service">Service</option>
-    </select>
-    </div>
-    <div>
-        <h4>Choose your race</h4>
-    <select id="myRace" class="select-css">
-      <option value="White">White</option>
-      <option value="Other">Other</option>
-    </select>
-    </div>
-    <div>
-        <h4>Choose your gender</h4>
-    <select id="myGender" class="select-css">
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select>
-    </div>
-    </div>
-    <div class="col-sm-6">
-    <table class="lime table table-bordered text-center" >
-        <caption class="text-center" style="color: black; font-size:18px">LIME Coefficients</caption>
-        {% for row in dbl %}
-            <tr>
-                <th>age</th>
-                <th style="background-color:{{style.0}}">{{ row.age|floatformat:6}}</th>
-            </tr>
-            <tr>
-                <th>workclass</th>
-                <th style="background-color:{{style.1}}">{{ row.workclass|floatformat:6}}</th>
-            </tr>
-            <tr>
-                <th>education</th>
-                <th style="background-color:{{style.2}}">{{ row.education|floatformat:6}}</th>
-            </tr>
-            <tr>
-                <th>marital_status</th>
-                <th style="background-color:{{style.3}}">{{ row.marital_status|floatformat:6}}</th>
-            </tr>
-            <tr>
-                <th>occupation</th>
-                <th style="background-color:{{style.4}}">{{ row.occupation|floatformat:6}}</th>
-            </tr>
-            <tr>
-                <th>race</th>
-                <th style="background-color:{{style.5}}">{{ row.race|floatformat:6}}</th>
-            </tr>
-            <tr>
-                <th>gender</th>
-                <th style="background-color:{{style.6}}">{{ row.gender|floatformat:6}}</th>
-            </tr>
-            <tr>
-                <th>hours_per_week</th>
-                <th style="background-color:{{style.7}}">{{ row.hours_per_week|floatformat:6}}</th>
-            </tr>
-        {% endfor %}
-    </table>
-    </div>
-    <script>
-        var slider = document.getElementById("myAgeRange");
-        var output = document.getElementById("age");
-        output.innerHTML = slider.value;
-
-        slider.oninput = function() {
-          output.innerHTML = this.value
-          income.innerHTML = Math.random().toFixed(5)
-        }
-
-        var slider2 = document.getElementById("myHoursRange");
-        var output2 = document.getElementById("hours");
-        output2.innerHTML = slider2.value;
-
-        slider2.oninput = function() {
-          output2.innerHTML = this.value
-          income.innerHTML = Math.random().toFixed(5)
-        }
-        var dropdown = document.getElementById("myWorkclass")
-        var output3 = document.getElementById("workclass")
-        output3.innerHTML = dropdown.value
-        dropdown.oninput = function(){
-            output3.innerHTML = this.value
-            income.innerHTML = Math.random().toFixed(5)
-        }
-
-        var dropdown2 = document.getElementById("myEduction")
-        var output4 = document.getElementById("education")
-        output4.innerHTML = dropdown2.value
-        dropdown2.oninput = function(){
-            output4.innerHTML = this.value
-            income.innerHTML = Math.random().toFixed(5)
-        }
-
-        var dropdown3 = document.getElementById("myMarital")
-        var output5 = document.getElementById("marital_status")
-        output5.innerHTML = dropdown3.value
-        dropdown3.oninput = function(){
-            output5.innerHTML = this.value
-            income.innerHTML = Math.random().toFixed(5)
-        }
-
-        var dropdown4 = document.getElementById("myOccupation")
-        var output6 = document.getElementById("occupation")
-        output6.innerHTML = dropdown4.value
-        dropdown4.oninput = function(){
-            output6.innerHTML = this.value
-            income.innerHTML = Math.random().toFixed(5)
-        }
-
-        var dropdown5 = document.getElementById("myRace")
-        var output7 = document.getElementById("race")
-        output7.innerHTML = dropdown5.value
-        dropdown5.oninput = function(){
-            output7.innerHTML = this.value
-            income.innerHTML = Math.random().toFixed(5)
-        }
-
-        var dropdown6 = document.getElementById("myGender")
-        var output8 = document.getElementById("gender")
-        output8.innerHTML = dropdown6.value
-        dropdown6.oninput = function(){
-            output8.innerHTML = this.value
-            income.innerHTML = Math.random().toFixed(5)
-        }
-
-
-
-        var income = document.getElementById("income")
-        income.innerHTML = 0.00894
-        var result = requestprediction(JSON.stringify(dataf))
-        function requestprediction(json){
-            var prediction = Math.random();
-            return prediction
-        }
-
-    </script>
-</div>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
-    <h3 style="text-align: center;">Do you understand how is the algorithm working?</h3>
+<div style="width:80%; margin: auto">
+    <h3 style="text-align: center;">What is your prediction for the income?</h3>
     <div class="col-sm-2"></div>
-    <div class="col-sm-2"><input class="button" style="background-color: #f4511e" type="button" value="Yes"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #f4511e" type="button" onclick="location.href='/{{nextpage}}'" value="<=50k"></div>
     <div class="col-sm-2"></div>
     <div class="col-sm-2"></div>
-    <div class="col-sm-2"><input class="button" style="background-color: #82D8FF" type="button" value="No"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #82D8FF" type="button" onclick="location.href='/{{nextpage}}'" value=">=50k"></div>
     <div class="col-sm-2"></div>
 </div>
 </div>
+
 {% endblock %}

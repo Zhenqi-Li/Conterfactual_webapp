@@ -1,12 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
 {% load staticfiles %}
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {opacity: 1}
+.slidecontainer {
+  width: 100%;
+}
+</style>
 <div class="text-center vertical-middle-sm">
-    <h1>Example 2</h1>
-    <h2>K = 4</h2>
+    <h1>Counterfactual and LIME</h1>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
+<div style="width:80%; margin: auto">
     <table class="table table-bordered text-center">
         <caption class="text-center" style="color: black; font-size:25px">Original Data</caption>
         <thead>
@@ -42,12 +61,11 @@
 </div>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
+<div style="width:80%; margin: auto">
     <table class="table table-bordered text-center">
         <caption class="text-center" style="color: black; font-size:25px">DICE Explanations</caption>
         <thead>
             <tr>
-                <th>Adultid</th>
                 <th>age</th>
                 <th>workclass</th>
                 <th>education</th>
@@ -56,23 +74,54 @@
                 <th>race</th>
                 <th>gender</th>
                 <th>hours_per_week</th>
-                <th>income</th>
+                <th style="color: red">Prediction</th>
             </tr>
         </thead>
 
         <tbody>
         {% for row in db %}
             <tr>
-                <th>{{ row.Adultid }}</th>
-                <th>{{ row.age}}</th>
+                {% if row.age != dbo.0.age %}
+                <th>{{ row.age }}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.workclass != dbo.0.workclass %}
                 <th>{{ row.workclass}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.education != dbo.0.education %}
                 <th>{{ row.education}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.marital_status != dbo.0.marital_status %}
                 <th>{{ row.marital_status}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.occupation != dbo.0.occupation %}
                 <th>{{ row.occupation}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.race != dbo.0.race %}
                 <th>{{ row.race}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.gender != dbo.0.gender %}
                 <th>{{ row.gender}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if row.hours_per_week != dbo.0.hours_per_week %}
                 <th>{{ row.hours_per_week}}</th>
-                <th>{{ row.income}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                <th style="color: red">{{ row.income}}</th>
             </tr>
         {% endfor %}
 
@@ -81,12 +130,11 @@
 </div>
 </div>
 <div class="row">
-<div style="width:70%; margin: auto">
+<div style="width:80%; margin: auto">
     <table class="table table-bordered text-center">
         <caption class="text-center" style="color: black; font-size:25px">LIME Explanations</caption>
         <thead>
             <tr>
-                <th>Adultid</th>
                 <th>age</th>
                 <th>workclass</th>
                 <th>education</th>
@@ -101,7 +149,6 @@
         <tbody>
         {% for row in dbl %}
             <tr>
-                <th>{{ row.Adultid }}</th>
                 <th style="background-color:{{style.0}}">{{ row.age|floatformat:6}}</th>
                 <th style="background-color:{{style.1}}">{{ row.workclass|floatformat:6}}</th>
                 <th style="background-color:{{style.2}}">{{ row.education|floatformat:6}}</th>
@@ -117,77 +164,80 @@
     </table>
 </div>
 </div>
+
 <div class="row">
-<div style="width:70%; margin: auto">
-    <form class="form-horizontal" method=POST action="/Example_2">
-    {% csrf_token %}
-       <div>
-           <table class="table table-hover">
-              <caption class="text-center" style="color: black; font-size:25px">Performance Survey</caption>
-              <thead>
-                <tr>
-                    <th>Questions</th>
-                    <th>Strongly Disagree</th>
-                    <th>Disagree</th>
-                    <th>Neutral</th>
-                    <th>Agree</th>
-                    <th>Strongly Agree</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                    <td>Do you think that the decision is justified given the profile?</td>
-                    <td>{{ rating_form.rate_choice1.0}}</td>
-                    <td>{{ rating_form.rate_choice1.1}}</td>
-                    <td>{{ rating_form.rate_choice1.2}}</td>
-                    <td>{{ rating_form.rate_choice1.3}}</td>
-                    <td>{{ rating_form.rate_choice1.4}}</td>
-                </tr>
+    <div style="width:80%; margin:auto">
+       <table class="table table-bordered text-center">
+           <caption class="text-center" style="color: black; font-size:25px">Based on the above explanations, here is the {{testcase}}st test case <text style="color:red"> {{testcase}}/3</text></caption>
+        <thead>
+            <tr>
+                <th>age</th>
+                <th>workclass</th>
+                <th>education</th>
+                <th>marital_status</th>
+                <th>occupation</th>
+                <th>race</th>
+                <th>gender</th>
+                <th>hours_per_week</th>
+            </tr>
+        </thead>
 
-                <tr>
-                    <td>Do you understand why you did not get the loan? (elaborate)</td>
-                    <td>{{ rating_form.rate_choice2.0}}</td>
-                    <td>{{ rating_form.rate_choice2.1}}</td>
-                    <td>{{ rating_form.rate_choice2.2}}</td>
-                    <td>{{ rating_form.rate_choice2.3}}</td>
-                    <td>{{ rating_form.rate_choice2.4}}</td>
-                </tr>
-
-                <tr>
-                    <td>What is your level of confidence for getting a different decision next time after changing your profile?</td>
-                    <td>{{ rating_form.rate_choice3.0}}</td>
-                    <td>{{ rating_form.rate_choice3.1}}</td>
-                    <td>{{ rating_form.rate_choice3.2}}</td>
-                    <td>{{ rating_form.rate_choice3.3}}</td>
-                    <td>{{ rating_form.rate_choice3.4}}</td>
-                </tr>
-
-                <tr>
-                    <td>How feasible are the changes that you want to make?</td>
-                    <td>{{ rating_form.rate_choice4.0}}</td>
-                    <td>{{ rating_form.rate_choice4.1}}</td>
-                    <td>{{ rating_form.rate_choice4.2}}</td>
-                    <td>{{ rating_form.rate_choice4.3}}</td>
-                    <td>{{ rating_form.rate_choice4.4}}</td>
-                </tr>
-
-                <tr>
-                    <td>How well do you think that you understand the underlying model?</td>
-                    <td>{{ rating_form.rate_choice5.0}}</td>
-                    <td>{{ rating_form.rate_choice5.1}}</td>
-                    <td>{{ rating_form.rate_choice5.2}}</td>
-                    <td>{{ rating_form.rate_choice5.3}}</td>
-                    <td>{{ rating_form.rate_choice5.4}}</td>
-                </tr>
-              </tbody>
-            </table>
-       </div>
-        <div class="form-group">
-            <label for="comment">Comment:</label>
-            <textarea class="form-control" rows="5" id="comment" name="content"></textarea>
-        </div>
-    <input type="submit" value="Submit" class="btn btn-info">
-</form>
+        <tbody>
+            <tr>
+                {% if testadults.age != dbo.0.age %}
+                <th>{{ testadults.age}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.workclass != dbo.0.workclass %}
+                <th>{{ testadults.workclass}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.education != dbo.0.education %}
+                <th>{{ testadults.education}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.marital_status != dbo.0.marital_status %}
+                <th>{{ testadults.marital_status}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.occupation != dbo.0.occupation %}
+                <th>{{ testadults.occupation}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.race != dbo.0.race %}
+                <th>{{ testadults.race}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.gender != dbo.0.gender %}
+                <th>{{ testadults.gender}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+                {% if testadults.hours_per_week != dbo.0.hours_per_week %}
+                <th>{{ testadults.hours_per_week}}</th>
+                {% else %}
+                <th>\</th>
+                {% endif%}
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+<div class="row">
+<div style="width:80%; margin: auto">
+    <h3 style="text-align: center;">What is your prediction for the income?</h3>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #f4511e" type="button" onclick="location.href='/{{nextpage}}'" value="<=50k"></div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2"><input class="button" style="background-color: #82D8FF" type="button" onclick="location.href='/{{nextpage}}'" value=">=50k"></div>
+    <div class="col-sm-2"></div>
 </div>
 </div>
 

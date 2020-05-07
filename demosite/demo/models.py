@@ -19,6 +19,19 @@ class Adult(models.Model):
     class Meta:
         db_table = "adult"
 
+class neighbor(models.Model):
+    age = models.FloatField(blank=True, default=None, null=True)
+    workclass = models.CharField(max_length=30, blank=True, null=True)
+    education = models.CharField(max_length=30, blank=True, null=True)
+    marital_status = models.CharField(max_length=30, blank=True, null=True)
+    occupation = models.CharField(max_length=30, blank=True, null=True)
+    race = models.CharField(max_length=30, blank=True, null=True)
+    gender = models.CharField(max_length=30, blank=True, null=True)
+    hours_per_week = models.FloatField(blank=True, default=None, null=True)
+    income = models.FloatField(blank=True, default=None, null=True)
+
+    class Meta:
+        db_table= 'neighbor'
 
 class AdultCFk_3(models.Model):
     Adultid = models.AutoField(auto_created=True, primary_key=True)

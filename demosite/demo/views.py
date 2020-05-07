@@ -1,14 +1,16 @@
 from django.shortcuts import render
-from .models import Adult, AdultCFk_3, AdultCFk_4, AdultCFk_5, LIMEexp, Survey_Comments
+from .models import Adult, AdultCFk_3, AdultCFk_4, AdultCFk_5, LIMEexp, Survey_Comments, neighbor
 from .forms import RateListForm, attentionform
 import random
 import pickle
 from django.http import HttpResponseRedirect
+import uuid
 
 
 # Create your views here.
-random_tidx = random.sample(range(1, 200), 3)
+test_num = 3
 random_idx = random.randint(1, 200)
+testidx = list(range((random_idx - 1) * 5, (random_idx - 1) * 5 + test_num))
 workid = 0
 def choosecolor(num):
     if num >= 0:
@@ -93,55 +95,39 @@ def attention(request):
 
 def exit(request):
     return render(request, "demo/exit.html", {'workid': workid-1})
-def demo_table1(request):
-    random_tidx_cp = random_tidx
+def demo_table1(request, testnum):
+    testnum = int(testnum)
+    template = "demo/Example_1.html"
     db_adult = Adult.objects.all()[:200]
     dbo = db_adult[random_idx - 1:random_idx]
     # print(cat2num(dbo[0].workclass))
-    testadults = [list(enumerate(db_adult))[i] for i in random_tidx_cp]
+    neighboradult = neighbor.objects.all()
+    testadults = [list(enumerate(neighboradult))[i] for i in testidx]
     db = AdultCFk_3.objects.all()
     db = db[(random_idx - 1) * 3:(random_idx - 1) * 3 + 3]
-    originalnum = [cat2num(dbo[0].workclass),cat2num(dbo[0].education),cat2num(dbo[0].marital_status),cat2num(dbo[0].occupation),cat2num(dbo[0].race),cat2num(dbo[0].gender)]
-    dice1 = [cat2num(db[0].workclass),cat2num(db[0].education),cat2num(db[0].marital_status),cat2num(db[0].occupation),cat2num(db[0].race),cat2num(db[0].gender)]
-    dice2 = [cat2num(db[1].workclass),cat2num(db[1].education),cat2num(db[1].marital_status),cat2num(db[1].occupation),cat2num(db[1].race),cat2num(db[1].gender)]
-    dice3 = [cat2num(db[2].workclass),cat2num(db[2].education),cat2num(db[2].marital_status),cat2num(db[2].occupation),cat2num(db[2].race),cat2num(db[2].gender)]
-    test1 = [cat2num(testadults[0][1].workclass),cat2num(testadults[0][1].education),cat2num(testadults[0][1].marital_status),cat2num(testadults[0][1].occupation),cat2num(testadults[0][1].race),cat2num(testadults[0][1].gender)]
-    if request.method == "POST":
-        return render(request, "demo/Example_1.html",
-                      {'db_adult': db_adult, 'db': db, 'dbo': dbo, 'testadults': testadults, 'workid': workid-1, 'ori': originalnum, 'dice1':dice1, 'dice2':dice2, 'dice3':dice3, 'test1':test1})
-
+    originalnum = [cat2num(dbo[0].workclass), cat2num(dbo[0].education), cat2num(dbo[0].marital_status),
+                   cat2num(dbo[0].occupation), cat2num(dbo[0].race), cat2num(dbo[0].gender)]
+    dice1 = [cat2num(db[0].workclass), cat2num(db[0].education), cat2num(db[0].marital_status),
+             cat2num(db[0].occupation), cat2num(db[0].race), cat2num(db[0].gender)]
+    dice2 = [cat2num(db[1].workclass), cat2num(db[1].education), cat2num(db[1].marital_status),
+             cat2num(db[1].occupation), cat2num(db[1].race), cat2num(db[1].gender)]
+    dice3 = [cat2num(db[2].workclass), cat2num(db[2].education), cat2num(db[2].marital_status),
+             cat2num(db[2].occupation), cat2num(db[2].race), cat2num(db[2].gender)]
+    test1 = [cat2num(testadults[testnum][1].workclass), cat2num(testadults[testnum][1].education),
+             cat2num(testadults[testnum][1].marital_status), cat2num(testadults[testnum][1].occupation),
+             cat2num(testadults[testnum][1].race), cat2num(testadults[testnum][1].gender)]
+    if testnum < test_num-1:
+        context = {'nextpage': 'Example_1/'+str(testnum+1),'testcase':testnum+1, 'testnum': testnum, 'db': db, 'dbo': dbo,
+                   'testadults': testadults[testnum][1], 'workid': workid - 1, 'ori': originalnum, 'dice1': dice1, 'dice2': dice2,
+                   'dice3': dice3, 'test1': test1}
     else:
-        return render(request, "demo/Example_1.html",
-                      {'db_adult': db_adult, 'db': db, 'dbo': dbo, 'testadults': testadults, 'workid': workid-1, 'ori': originalnum, 'dice1':dice1, 'dice2':dice2, 'dice3':dice3, 'test1':test1})
-def demo_table1_1(request):
-    random_tidx_cp = random_tidx
-    db_adult = Adult.objects.all()[:200]
-    dbo = db_adult[random_idx - 1:random_idx]
-    testadults = [list(enumerate(db_adult))[i] for i in random_tidx_cp]
-    db = AdultCFk_3.objects.all()
-    db = db[(random_idx - 1) * 3:(random_idx - 1) * 3 + 3]
+        context = {'nextpage': 'Survey', 'testcase':testnum+1, 'testnum': testnum, 'db_adult': db_adult, 'db': db, 'dbo': dbo,
+                   'testadults': testadults[testnum][1], 'workid': workid - 1, 'ori': originalnum, 'dice1': dice1, 'dice2': dice2,
+                   'dice3': dice3, 'test1': test1}
     if request.method == "POST":
-        return render(request, "demo/Example_1_1.html",
-                      {'db_adult': db_adult, 'db': db, 'dbo': dbo, 'testadults': testadults, 'workid': workid-1})
-
+        return render(request, template,context)
     else:
-        return render(request, "demo/Example_1_1.html",
-                      {'db_adult': db_adult, 'db': db, 'dbo': dbo, 'testadults': testadults, 'workid': workid-1})
-def demo_table1_2(request):
-    random_tidx_cp = random_tidx
-    db_adult = Adult.objects.all()[:200]
-    dbo = db_adult[random_idx - 1:random_idx]
-    testadults = [list(enumerate(db_adult))[i] for i in random_tidx_cp]
-    db = AdultCFk_3.objects.all()
-    db = db[(random_idx - 1) * 3:(random_idx - 1) * 3 + 3]
-    if request.method == "POST":
-        return render(request, "demo/Example_1_2.html",
-                      {'db_adult': db_adult, 'db': db, 'dbo': dbo, 'testadults': testadults, 'workid': workid-1})
-
-    else:
-        return render(request, "demo/Example_1_2.html",
-                      {'db_adult': db_adult, 'db': db, 'dbo': dbo, 'testadults': testadults, 'workid': workid-1})
-
+        return render(request, template,context)
 def survey(request):
     if request.method == "POST":
         rating_form = RateListForm(request.POST)
@@ -160,13 +146,13 @@ def survey(request):
         return render(request, "demo/Survey.html",
                       {'rating_form': rating_form, 'workid': workid-1})
 
-def demo_table2(request):
-    dbo = Adult.objects.all()
-    dbo = dbo[:200]
-    random_idx = random.randint(1, 200)
-    dbo = dbo[random_idx - 1:random_idx]
-    db = AdultCFk_4.objects.all()
-    db = db[(random_idx - 1) * 4:(random_idx - 1) * 4 + 4]
+def demo_table2(request, testnum):
+    template = "demo/Example_2.html"
+    testnum = int(testnum)
+    db_adult = Adult.objects.all()[:200]
+    dbo = db_adult[random_idx - 1:random_idx]
+    db = AdultCFk_3.objects.all()
+    db = db[(random_idx - 1) * 3:(random_idx - 1) * 3 + 3]
     dbl = LIMEexp.objects.all()
     dbl = dbl[random_idx - 1:random_idx]
     style = [0]*8
@@ -178,34 +164,30 @@ def demo_table2(request):
     style[5] = choosecolor(dbl[0].race)
     style[6] = choosecolor(dbl[0].gender)
     style[7] = choosecolor(dbl[0].hours_per_week)
-    if request.method == "POST":
-        rating_form = RateListForm(request.POST)
-        if rating_form.is_valid():
-            new_rate = rating_form.save()
-            new_rate.save()
-        if request.POST.get('content'):
-            com = Comments()
-            com.comments = request.POST.get("content")
-            com.save()
-        return render(request, "demo/Example_2.html",
-                      {'db': db, 'dbo': dbo, 'dbl': dbl, 'rating_form': rating_form, 'style': style})
 
+    neighboradult = neighbor.objects.all()
+    testadults = [list(enumerate(neighboradult))[i] for i in testidx]
+    if testnum < test_num-1:
+        context = {'nextpage': 'Example_2/'+str(testnum+1),'testcase':testnum+1, 'testnum': testnum, 'db_adult': db_adult, 'db': db, 'dbo': dbo,
+                   'testadults': testadults[testnum][1], 'workid': workid - 1, 'dbl':dbl, 'style':style }
     else:
+        context = {'nextpage': 'Survey', 'testcase':testnum+1, 'testnum': testnum, 'db_adult': db_adult, 'db': db, 'dbo': dbo,
+                   'testadults': testadults[testnum][1], 'workid': workid - 1, 'dbl':dbl, 'style':style}
+    if request.method == "POST":
+        return render(request, template,context)
+    else:
+        return render(request, template,context)
 
-        rating_form = RateListForm()
-        return render(request, "demo/Example_2.html",
-                      {'db': db, 'dbo': dbo, 'dbl': dbl, 'rating_form': rating_form, 'style': style})
-
-def demo_table3(request):
-    dbo = Adult.objects.all()
-    dbo = dbo[:200]
-    random_idx = random.randint(1, 200)
-    dbo = dbo[random_idx - 1:random_idx]
-    db = AdultCFk_5.objects.all()
-    db = db[(random_idx - 1) * 5:(random_idx - 1) * 5 + 5]
+def demo_table3(request, testnum):
+    template = "demo/Example_3.html"
+    testnum = int(testnum)
+    db_adult = Adult.objects.all()[:200]
+    dbo = db_adult[random_idx - 1:random_idx]
+    db = AdultCFk_3.objects.all()
+    db = db[(random_idx - 1) * 3:(random_idx - 1) * 3 + 3]
     dbl = LIMEexp.objects.all()
     dbl = dbl[random_idx - 1:random_idx]
-    style = [0] * 8
+    style = [0]*8
     style[0] = choosecolor(dbl[0].age)
     style[1] = choosecolor(dbl[0].workclass)
     style[2] = choosecolor(dbl[0].education)
@@ -215,20 +197,15 @@ def demo_table3(request):
     style[6] = choosecolor(dbl[0].gender)
     style[7] = choosecolor(dbl[0].hours_per_week)
 
-    if request.method == "POST":
-        rating_form = RateListForm(request.POST)
-        if rating_form.is_valid():
-            new_rate = rating_form.save()
-            new_rate.save()
-        if request.POST.get('content'):
-            com = Comments()
-            com.comments = request.POST.get("content")
-            com.save()
-        return render(request, "demo/Example_3.html",
-                      {'db': db, 'dbo': dbo, 'dbl': dbl, 'rating_form': rating_form, 'style': style})
-
+    neighboradult = neighbor.objects.all()
+    testadults = [list(enumerate(neighboradult))[i] for i in testidx]
+    if testnum < test_num-1:
+        context = {'nextpage': 'Example_3/'+str(testnum+1),'testcase':testnum+1, 'testnum': testnum, 'db_adult': db_adult, 'db': db, 'dbo': dbo,
+                   'testadults': testadults[testnum][1], 'workid': workid - 1, 'dbl':dbl, 'style':style }
     else:
-
-        rating_form = RateListForm()
-        return render(request, "demo/Example_3.html",
-                      {'db': db, 'dbo': dbo, 'dbl': dbl, 'rating_form': rating_form, 'style': style})
+        context = {'nextpage': 'Survey', 'testcase':testnum+1, 'testnum': testnum, 'db_adult': db_adult, 'db': db, 'dbo': dbo,
+                   'testadults': testadults[testnum][1], 'workid': workid - 1, 'dbl':dbl, 'style':style}
+    if request.method == "POST":
+        return render(request, template,context)
+    else:
+        return render(request, template,context)
